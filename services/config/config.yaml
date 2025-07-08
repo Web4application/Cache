@@ -1,0 +1,6 @@
+# Default configuration for Cache service
+server:
+  port: 8080
+storage:
+  backupFile: data/cache_backup.json
+  autoBackupSeconds: 60

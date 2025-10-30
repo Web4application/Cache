@@ -5,3 +5,8 @@ cd Cache
 git add .
 git commit -m "Add full caching microservice with LRU, TTL, API, persistence"
 git push
+
+npm install -g corepack
+
+# Specifying an explicit install-directory makes corepack overwrite volta's yarn shims, which is what we want
+corepack enable --install-directory ~/.volta/bin

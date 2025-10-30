@@ -1,0 +1,35 @@
+name: Run CI
+on: [push, pull_request]
+
+jobs:
+  normal_ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run normal CI
+        run: echo "Running normal CI"
+
+  pull_request_ci:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - name: Run PR CI
+        run: echo "Running PR only CI"
+
+   name: PostgreSQL Service Example
+on: push
+jobs:
+  postgres-job:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          # Maps TCP port 5432 in the service container to a randomly chosen available port on the host.
+          - 5432
+
+    steps:
+      - run: pg_isready -h localhost -p ${{ job.services.postgres.ports[5432] }}
+      - run: echo "Run tests against Postgres"
